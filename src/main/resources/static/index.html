@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8"/>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        .text-xs {
+            font-size: 12px;
+            line-height: 16px;
+        }
+        .text-sm {
+            font-size: 14px;
+            line-height: 20px;
+        }
+        .text-base {
+            font-size: 16px;
+            line-height: 24px;
+        }
+        .text-lg {
+            font-size: 18px;
+            line-height: 28px;
+        }
+        .text-xl {
+            font-size: 20px;
+            line-height: 28px;
+        }
+        .text-2xl {
+            font-size: 24px;
+            line-height: 32px;
+        }
+        .text-3xl {
+            font-size: 30px;
+            line-height: 36px;
+        }
+        .text-4xl {
+            font-size: 36px;
+            line-height: 40px;
+        }
+        .text-5xl {
+            font-size: 48px;
+            line-height: 1;
+        }
+        .text-6xl {
+            font-size: 60px;
+            line-height: 1;
+        }
+        .font-family {
+            font-family: 'HarmonyOS Sans SC', serif;
+        }
+        .overflow-hidden {
+            overflow: hidden;
+        }
+        .float-left {
+            float: left;
+        }
+        .float-right {
+            float: right;
+        }
+        .ml-12 {
+            margin-left: 12px;
+        }
+        .ml-8 {
+            margin-left: 8px;
+        }
+        .mb-8 {
+            margin-bottom: 8px;
+        }
+        .mb-12 {
+            margin-bottom: 12px;
+        }
+        .mb-24 {
+            margin-bottom: 24px;
+        }
+        .white {
+            color: white;
+        }
+        .color {
+            color: #5C33FF;
+        }
+        .text-c1 {
+            color: #000000;
+        }
+        .text-c2 {
+            color: #666666;
+        }
+        .text-c4 {
+            color: #cccccc;
+        }
+        .text-c3 {
+            color: #999999;
+        }
+        .bg-color {
+            background-color: #5C33FF;
+        }
+        .mark {
+            font-size: 24px;
+            line-height: 42px;
+        }
+        .name {
+            margin: 0 0 8px;
+            font-size: 34px;
+            font-weight: 700;
+            line-height: 40px;
+        }
+        .en-name {
+            font-size: 17px;
+            font-weight: 700;
+            line-height: 19px;
+        }
+
+        .logo-bg {
+            background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAYAAACOEfKtAAAAAXNSR0IArs4c6QAAAARzQklUCAgICHwIZIgAAAWqSURBVHic7Z1vaJVVHMc/584tuzg23drcsj8vRBRNqslolhWDjMQROAmikklRuHrhoiEYBBHsTaURbIEihgm9sT9iSO2FBMM/iRJIgoiCbHO36SYbi2WOu9OL81zd7p7n/nnOOc99rns+sDf3Ofv9zv0+5zznnN85z+8KfCClFEAT0AysA1YA9UA5EPNjM0CmgQlgCLgMnANOAKeFEDJfYyKfwlLKR4F2YBtQl6+zkJMADgE9Qoh+o5allLVSym4p5R15/3NHqu9am4s2WVuglLIN+Byo1rwPxcYI0CmE+DZTIU8BpZRlwF5Ul53P9AAdQog7bhddBZRSLgJ+ADZarFgx0Qu0CiH+Sb8wR0Cn5R0jEi+dXqAlvSW6TTn2EonnxkaUNrOY1QKdAeNgQBUqVrbPHFjuCugM238x/0bbfBkB1gghhmF2F/6ESLxcqEZpBTgtUKoVxhWgtECVKjamgOVCiP5UC2wnEi8fSnHmx0KqwMB17r+1rW0SwMMxVFQlEi9/6oCmGCokFeGP5hgqnhfhj3UxVDA0wh8rhJRyDKgodE2KlHEhpUwS/jB8WJkWUsq89wH8cOQbOHogCE/3qKiCJTWwdj1s2Ay1j5j3EZiA3bvhTG8QntyJlcDzLfDGh7AwbtCuOVOZGR4IypM700n4/Wf4dDvcHDJnd94ImGLwKuzpgNuTZuwFIuD4KEzOCYYXjsGrcHiPGVuBCPh3SFrfTPqOmekVgQiYuBaEl/yYTkLfL/p2FuibyI7XnX7gQdj0lh2f46Nq0JhOepe5cAq27tDzE4yAg+6fl1fClnft+V31NHR/7H391g19H4F0Ya8WuCSnwxP+WZklTDI+qu8jEAFveAhYXmnX76Xzma9XG4iCWunCkxNw8ayasI6Pwu1/3cvdHIIf99moAYwk4OTxzGXqH9f3Y1TA4QH4aR+c7s388E7Rf1n9FYqGF/VtGBPwzz7o2e3d2sJGfBE8Y+D8hREBL5yGrz7KrdWFha3tEC/Xt6M9iEyMqUhLMYm3/hV46TUztrRb4NEDatAoFpq3wLZd5uxpC1jIGF8+1D0Gr++EpzaYtasl4ODV7JPR6jqortfx4o+SEjVRr10Gqxth+RN2/GgJOJbDTL65FVradLyEG+srkYoq2x4Ki5aAlTmIk0uZYkZ7U+mDlzM/ByuqoLRMx4N/KqthcY0aOBpeMDPvS0dbwMNfwm/fm6qOPeLlsOlN2NymBhhTaAs4OQEdLeHa88jE6kZ4v8tcJEh7EImXqwrFDN5Vm1w8C1/vgqShlZORUXjtetj5hQrRFwOXzsORHjO2jJ5MGB5Q8b0zOYazCklpGew9pj/NsnK04/YknPoVDnaZtmyWrTvg1bf1bFiJSC+MQ80y92sVVeqZaZsRJ9o9kvAuc+FUSAUE773gh+pgVYMtrzNoUKexPnvHu0gmcXPF2lLOayfOxmTWi2zH2UK9rZm45v55RYDvQh3/LvP1xTX6Pqx1Ya8WePEP6HrPltd73Eyo52Amlho4cGlFwKn/vE8j3LphpuuY4Mnn9G1Y6cJe4oWJ0jJ4dpO+HTsChvA4Wzqb28zEKq0IOHTNhlVzrG7Un/+lmHddeG2TWrebCmlZGUSuX7FhVY/4IrWZ3txqNh64AJVLymhLTCbNnHzSoaQEFtfC0mWwskGdgzH5eoPDdPSqlx7jMVQWswh/DMVQKeAi/HE5hsqfF+GPczFU8sEIf5yIkk74RyWdcNJeHip0bYqQQ0IIGSXe8cfsxDtOztD9ha1TUbE/lWc1Sj6WP+7Jx5wPOgtVqyKiMyUepK2Bnbx4hvbs70t60pPSRilAcye3FKBOgVbnHyIUqSS0czL5uoaxnGy1LUTdGZQGLW4ZfCFKxJ2JnBJxZw2kOgbWoO7ElImahZwp1Hddk008iH6MYCa+fowgLwFTyOjnMO7yP8x+jFnh+ogJAAAAAElFTkSuQmCC) center no-repeat;
+        }
+        .ml-16 {
+            margin-left: 16px;
+        }
+        .ml-24 {
+            margin-left: 24px;
+        }
+        .pr-24 {
+            padding-right: 24px;
+        }
+        .font-500 {
+            font-weight: 500;
+        }
+        .font-600 {
+            font-weight: 600;
+        }
+        .font-bold {
+            font-weight: 700;
+        }
+        .pt-10 {
+            padding-top: 10px;
+        }
+        .p-24 {
+            padding: 24px;
+        }
+        .text-left {
+            text-align: left;
+        }
+        .text-center {
+            text-align: center;
+        }
+        .text-right {
+            text-align: right;
+        }
+        .text-justify {
+            text-align: justify;
+        }
+        .text-start {
+            text-align: start;
+        }
+        .text-end {
+            text-align: end;
+        }
+        .list-none {
+            list-style: none;
+        }
+        .mt-12 {
+            margin-top: 12px;
+        }
+        .inline-block {
+            display: inline-block;
+        }
+        .ml-2 {
+            margin-left: 2px;
+        }
+        .m-24 {
+            margin: 24px;
+        }
+        .mt-4 {
+            margin-top: 4px;
+        }
+        .pl-40 {
+            padding-left: 40px;
+        }
+        .py-8 {
+            padding-top: 8px;
+            padding-bottom: 8px;
+        }
+        .py-6 {
+            padding-top: 6px;
+            padding-bottom: 6px;
+        }
+        .px-20 {
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+        .mr-12 {
+            margin-right: 12px;
+        }
+        .mr-16 {
+            margin-right: 16px;
+        }
+        .mr-20 {
+            margin-right: 20px;
+        }
+        .mr-124 {
+            margin-right: 124px;
+        }
+        .bg-stats {
+            background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARzQklUCAgICHwIZIgAAAKBSURBVFiF5Zc/TBNRHMc/r/daE2octAMDiWwdNMGE4kmawKCJA4kdTCChQVAcqgmTi5sJk6PxFgaDIKkhJJowdHCEhGARjB0c2CRhYECD0mKkdzwH7NFy1/ZKWxj8Tvfnl9/38+737vfeE0opjTOU7yzNAaTXQMNAZmbR9/PcQdGLIqSgHUjPrBIFGNYZ0CRbk0sseM0rqpXAMJBrSQYti3EUbW4xM6vIRzdpzf5k8zArXzSNl51x3o6NYVbKX7EEiR7CK29YtUwmy5nbIxGcs28U1yyTyZVp0o9vcflEACPd9OX2SKO4WilBFXXs7pC+f4PbNQGMdNNn5nkHnK/DvKBQ3mS+HIQDINFD2MqTFDVM0GoSIE2TabdylAAYBnLvN3M0ZuTHFdrd4b1hlA6sBGAtyaBSXGmCeUEdn5P0uwIYBtKyGG+iOQCmyRNXgMwserVfrUHqeBCl1wHwZ59YPVkvXOQ7kPUSKw6O5tjRhFBHVCfR8zmyT/tp+/WDS5XiAkFyL+bZdgJAqB6AAgQev0JB9lowFKncsxssewE7q+VYL1wUA2ycIoDtVQyw7RLYLG05AHzC+yaiXokiLxvAH2D+tAACAVI2TPGOaKiLb03vhoLNmU+0F25L/gKfxrOmmrt4lABE4iSF4GsT/TOROMniB45NaaKHcG6PNI3fE2SDLegTi6wXP3Q0oolF1jU/cWhoZzSlZOC4uSsAwNQyKc3PXWrs62WUlZLY6498cHtZthVPLZMKtqDXOScywRb0cuYVAeCwHF336PRJRhH/Dh1eJNj0SUavDztr7git5XD6MEo0v0/sQBEFWsHe5W4AW0KwEAiQerXEkmfW//50/BfJf8WeynYGbQAAAABJRU5ErkJggg==) 0 0 no-repeat;
+        }
+        .bg-funds {
+            background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARzQklUCAgICHwIZIgAAAJnSURBVFiF7Za/a1NRFMc/5/VZ35BBIWCFDBk6FQdJKjg4xM3BTTvUpJBBKKWKddIOomCXgKUNDq3oEEhquwhdhP4BDkLzquDSwSFDhwwWgmaIjclxSJq8/DAmL0mX9gsXLufcc79f7j3nngtnOO2QdsaZoK4pRAFrCJy5sjD3Pi1bbQXMTOoVVb4NgdiJbMqWywBGs0fBO2RygLHjSYuAk0aLgJKSPQHeg+OJ2ezZtGU/HNRllDvDYDaEgsLiMPZ2hYYqiPrVOrrIpUFtPmryO7ErHa+0dgWRoD4qwiujzbX0CoUM8OYIdqBzTtXJlCWR/smB2LlDXiQyUuhmcZ1Q8PTLrMrjjT1ZBZgO6o0RZRYhpJW6/24IO8U/xLe+SqZOW0UkqNonfzxly0IopKbvJysID/6xrgA8TNnyDhrfgVwf5FnzkKcAvl+sOckF9gXWgXzVZAFv7wU02iCgWpt5XEAhnshIIRzQ28B9p6+kxJK2zAFpp92A19FrOlbLgQ1b1qkodQ0RnnS/GE+xzPzAekH0ql5QuN5LjCi3aicQDmhEhOeqvZWiwOfUnkyXTHzSITZly80mriTCeC1AhBXAK22/KB2RBygJptGmjgxpbe8i9VxzKnb7DxgD0HK9wzXhZTig8w0WxVt9AA4GkQPeSEDHN235AXxq47dE8DuH49H76BTgqgQBkFrrXu4hqmAarNYElCHmWgAsRP1qpWzZRvnQTYAqi4ldyTak3NSEekZG3eWClSObyEhhakI95y0SjlNpgcCzpC1L1flwEJ7Uu0aZWRVCVJI9j7ItSjz5RdL/CT/DKcJfQJi15yYlc/8AAAAASUVORK5CYII=) 0 0 no-repeat;
+        }
+        .bg-order {
+            background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARzQklUCAgICHwIZIgAAAH9SURBVFiF7ZfPahNRFMZ/58ZCN8EuuihiQXDjomDCxL2+QwrSTHElKHTjSgtKFyq1uJIuXOhCyJ9a8AUEoXmAjBbMA7gY0F1TrBAwnc+FkxIngU5q0iLmW5753Xs/zr0fnIH/XZYGWvZUFSyl3LBWDqx0IgMlT3cMHgOz3VolMPM9Ke2GAGGWqYvf+dlTakXiXu2jvUmyLuFmvfdwgKVryhnU0h5uULvwg4VEecYZzwfx55Jgn8OITUWshOe5Va9b5zgDfl5XnfF6wKfZAbU/r2DYVg+rSmB9b84NAk9TEwPJR9gv40alYfVhNvULuo7YScP+Ax0QO743ZDiGwM+8AxMDkxSceQqON/B3ahpsR2JXGdqDgHFdQUewGmbJlwN74hxfpuDrqRkQPKoG9mx+n6LvaU/i82FE0/e0Vyqo2MuOYx5ohlny8/sU5dgCDgRPTUxj3AemZSxWG/YOxtABg+163TpyvARArJpxgBEST0omXnX5kRuIxO5yQQvE453B5UPxQaKAWImxmZgZfQqUod0bQxk3M3AJx4tIhO731H2kkXfAReTKDWsCLQCJDcF7iSsOvsVYK2bGkoISgEXcBTBj3cSciTlgE0DG7SPDicWtERjIlTw9KH+ytzIWgTbGGsYa0O5NAKT4MzqJBB2Dh5XANgC6D67b9ol69Qunobh/qA+wCQAAAABJRU5ErkJggg==) 0 0 no-repeat;
+        }
+        .bg-mark {
+            background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARzQklUCAgICHwIZIgAAAFpSURBVFiF7Zcvb8JQFMV/F2pxiAnkDMnEoGYSxNy+AAGDmCCZWDLNN2DJxJZlmW2zLzBJMpIZTJuJSSRigg+AoNwJ/qQQaLumXU2Pen3v5pzzTu576YOMIf6Pdl2vRHgGKinpTVXp2a68byYKO26E1xTFASrrDW5R2Cs4SVF8ayLIwL8jN5C5ASO0wqNpfckoDnnnXBsU+QiqCU1AiiziiEdFaAIKnx1TUzOQeQ/kBhI7BVE6/hDyU5B5D+QGcgO5gfCb8Dh+gPv1+I6YP7SxElDhyfCoWo4MLEcGhkcV5SUO187DpGNq2JX3rcq17cr40GK7rhfrt8VZEInlyFY3agLzJfSnJWrHxAFsV8bTErUl9IF5FOLQBFQZCvQsVyYRza646nrKKo3G/lpQAiPfeCZK13bl8q/iAJYrE8uRpihdYLaZV2Xor9tJoGVquaDcCiw84fHNkRkJoGVquajcKBhL4SEp3kTwC5r4bcJ1YUAsAAAAAElFTkSuQmCC) 0 0 no-repeat;
+        }
+        .divide-line {
+            margin: 48px -24px 8px;
+            border-top: 1px dashed #AD99FF;
+        }
+        .mt-24 {
+            margin-top: 24px;
+        }
+        .mb-4 {
+            margin-bottom: 4px;
+        }
+        .px-24 {
+            padding-left: 24px;
+            padding-right: 24px;
+        }
+        .rounded-12 {
+            border-radius: 12px;
+        }
+        .rounded-full {
+            border-radius: 9999px;
+        }
+        .border-left {
+            border-left: 1px solid #E9EBF0;
+        }
+        .divide-line-sm {
+            display: inline-block;
+            width: 1px;
+            height: 14px;
+            margin: 0 4px;
+            background-color: #E9EBF0;
+            vertical-align: middle;
+        }
+        .border-bottom-line {
+            border-bottom: 1px solid #E9EBF0;
+        }
+        .border-line {
+            border: 1px solid #E9EBF0;
+        }
+        .table-header {
+            background-color: #EBEEF5;
+            border-bottom: 1px solid #E9EBF0;
+            font-size: 14px;
+            line-height: 37px;
+            color: #000000;
+        }
+        .table-footer {
+            font-size: 16px;
+            font-weight: bold;
+            border-bottom: 1px solid #E9EBF0;
+            background-color: #F5F7FA;
+            color: #000000;
+        }
+        .bg-white {
+            background-color: white;
+        }
+        .number {
+            display: inline-block;
+            width: 40px;
+            text-align: right;
+            float: left;
+        }
+        .mark-text {
+            margin-left: 40px;
+        }
+        .pr-16 {
+            padding-right: 16px;
+        }
+    </style>
+    <title></title>
+</head>
+
+<!--HarmonyOS Sans SC-->
+<!---apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji'-->
+
+<body class="font-family text-sm" style="width:1200px;margin:0 auto;padding:0;">
+<!-- LOGO -->
+<div class="overflow-hidden white bg-color" style="padding:26px 24px;">
+    <div class="float-left logo-bg" style="width:80px;height:80px;"></div>
+    <div class="float-left ml-16 pr-24">
+        <div class="text-5xl font-bold">亿邦证券(国际)</div>
+        <div class="small font-bold mt-12">香港上环德辅道西9号金刚商业中心9楼9C室</div>
+    </div>
+    <div class="float-left" style="width: 1px;background-color: white;height: 64px;margin-top: 8px;"></div>
+    <div class="float-left ml-24 pt-10">
+        <div class="text-4xl font-500">保证金账户月结单</div>
+        <div class="text-base mt-4">2023年3月10月</div>
+    </div>
+</div>
+
+<div class="px-24">
+    <!--user-->
+    <div class="p-24 overflow-hidden mt-24 mb-4 border-line"
+         style="border-radius:4px;background-color:rgb(245,246,247);">
+        <div class="float-left">
+            <div class="mb-24 text-3xl font-bold">尤文浩</div>
+            <div class="overflow-hidden text-sm mb-12">
+                <div class="float-left text-c3">账户号码</div>
+                <div class="float-left ml-12">12312341234</div>
+            </div>
+            <div class="mb-12 overflow-hidden text-sm">
+                <div class="float-left text-c3">账户类型</div>
+                <div class="float-left ml-12">保证金账户</div>
+            </div>
+            <div class="overflow-hidden text-sm">
+                <div class="float-left text-c3">客户地址</div>
+                <div class="float-left ml-12">江西省上饶市张家楼镇刘家草泊134号</div>
+            </div>
+        </div>
+        <div class="float-right text-left" style="width:492px;margin-top:43px;">
+            <div class="text-c3">总资产</div>
+            <div class="text-xl font-bold" style="margin:8px 0 12px;">
+                1,000,000.00
+                <span class="text-sm text-c2">USD</span>
+            </div>
+            <ul class="list-none overflow-hidden" style="margin:8px 0 12px;padding:0;border-radius: 8px;">
+                <!-- TODO: 此处宽度 dynamic -->
+                <li class="float-left bg-color" style="width:50%;height:10px;"></li>
+                <li class="float-left" style="width:30%;height:10px;background-color:rgb(69,203,229);"></li>
+                <li class="float-left" style="width:20%;height:10px;background-color:rgb(250,205,150);"></li>
+            </ul>
+            <div class="list-none mt-12 overflow-hidden">
+                <div class="float-left text-c2">
+                    <span class="inline-block bg-color" style="width:10px;height:10px;"></span>
+                    <span class="ml-2">股票</span>
+                    <span class="ml-16 text-c1">48,300,686.88</span>
+                </div>
+                <div class="float-left text-c2" style="margin:0 37px;">
+                    <span class="inline-block" style="width:10px;height:10px;background-color:rgb(69,203,229);"></span>
+                    <span class="ml-2">现金</span>
+                    <span class="ml-16 text-c1">23,699,622.12</span>
+                </div>
+                <div class="float-left text-c2">
+                    <span class="inline-block" style="width:10px;height:10px;background-color:rgb(250,205,150);"></span>
+                    <span class="ml-2">利息</span>
+                    <span class="ml-16 text-c1">10.00</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ml-24" style="color:rgb(250,137,51);">*2023年3月10日参考汇率:1港元=0.8758人民币 1 港元=0.1275美元</div>
+    <!--期初-->
+    <div class="pl-40 color text-2xl font-bold bg-stats" style="margin:40px 0 27px;">
+        期初
+    </div>
+    <div style="padding:20px;background-color: #f0f2fb;border-radius: 2px;">
+        <div style="margin-bottom:28px;font-size:20px;font-weight:700;padding-bottom:16px;border-bottom:1px solid #ddd;">
+            资产总览（HKD）
+        </div>
+        <div></div>
+        <div style="zoom:1;overflow:hidden;">
+            <div class="text-c2 float-left text-base" style="width:25%;">
+                <div style="margin-bottom:8px;">股票总价值</div>
+                <div class="text-c1">100.00</div>
+            </div>
+            <div class="text-c2 float-left text-base" style="width:25%;">
+                <div style="margin-bottom:8px;">现金总价值</div>
+                <div class="text-c1">100.00</div>
+            </div>
+            <div class="text-c2 float-left text-base" style="width:25%;">
+                <div style="margin-bottom:8px;">累计利息</div>
+                <div class="text-c1">100.00</div>
+            </div>
+            <div class="text-c2 float-left text-base" style="width:25%;">
+                <div style="margin-bottom:8px;">资产总价值</div>
+                <div class="text-c1">100.00</div>
+            </div>
+        </div>
+    </div>
+    <!--期初·持仓明细-->
+    <div style="margin:40px 0 20px;font-size:20px;font-weight: 700;color:#000000;">期初·持仓明细</div>
+    <div style="border-radius: 8px 8px 0 0;overflow: hidden;">
+        <table style="width:100%;border:0;border-collapse: collapse;">
+            <tr class="table-header">
+                <td style="position:relative;width:30%;padding-left:16px">
+                    股票信息
+                    <span
+                            style="position:absolute;right:0;top:10px;display:inline-block;height:21px;vertical-align: middle;"></span>
+                </td>
+                <td style="position:relative;width:14%;padding-right:16px;text-align: right;">
+                    持股数量
+                    <span
+                            style="position:absolute;right:0;top:10px;display:inline-block;height:21px;vertical-align: middle;"></span>
+                </td>
+                <td style="position:relative;width:15%;padding-right:16px;text-align: right;">
+                    昨收价
+                    <span
+                            style="position:absolute;right:0;top:10px;display:inline-block;height:21px;vertical-align: middle;"></span>
+                </td>
+                <td style="position:relative;width:14%;padding-right:16px;text-align: right;">
+                    市值
+                    <span
+                            style="position:absolute;right:0;top:10px;display:inline-block;height:21px;vertical-align: middle;"></span>
+                </td>
+                <td style="position:relative;width:14%;padding-right:16px;text-align: right;">
+                    初始保证金
+                    <span
+                            style="position:absolute;right:0;top:10px;display:inline-block;height:21px;vertical-align: middle;"></span>
+                </td>
+                <td style="position:relative;width:14%;padding-right:16px;text-align: right;">
+                    维持保证金
+                </td>
+            </tr>
+            <tr class="text-sm text-c1 bg-white border-bottom-line">
+                <td style="padding:16px;">
+                    <div class="text-sm"><span class="text-base mr-16">苹果</span>AAPL</div>
+                    <div class="text-c3" style="margin-top:8px;">
+                        纽约证券交易所
+                        <span class="divide-line-sm"></span>
+                        USD
+                    </div>
+                </td>
+                <td class="text-c2" style="text-align:right;padding-right: 16px;">200,200,434.88</td>
+                <td class="text-c2" style="text-align:right;padding-right: 16px;">200,200,434.88</td>
+                <td class="text-c2" style="text-align:right;padding-right: 16px;">200,200,434.88</td>
+                <td class="text-c2" style="text-align:right;padding-right: 16px;">200,200,434.88</td>
+                <td class="text-c2" style="text-align:right;padding-right: 16px;">200,200,434.88</td>
+            </tr>
+            <tr class="border-bottom-line text-sm text-c1 bg-white">
+                <td style="padding:16px;">
+                    <div class="text-sm"><span class="text-base mr-16">TENCENT</span>AAPL</div>
+                    <div class="text-c3" style="margin-top:8px;">
+                        纽约证券交易所
+                        <span class="divide-line-sm"></span>
+                        USD
+                    </div>
+                </td>
+                <td class="text-c2" style="text-align:right;padding-right: 16px;">200,200,434.88</td>
+                <td class="text-c2" style="text-align:right;padding-right: 16px;">200,200,434.88</td>
+                <td class="text-c2" style="text-align:right;padding-right: 16px;">200,200,434.88</td>
+                <td class="text-c2" style="text-align:right;padding-right: 16px;">200,200,434.88</td>
+                <td class="text-c2" style="text-align:right;padding-right: 16px;">200,200,434.88</td>
+            </tr>
+            <tr class="table-footer">
+                <td style="padding:16px;">
+                    总计
+                    <span class="text-c3">（HKD）</span>
+                </td>
+                <td class="font-500" style="text-align:right;padding-right: 16px;"></td>
+                <td class="font-500" style="text-align:right;padding-right: 16px;"></td>
+                <td class="font-500" style="text-align:right;padding-right: 16px;">200,200,434.88</td>
+                <td class="font-500" style="text-align:right;padding-right: 16px;">200,200,434.88</td>
+                <td class="font-500" style="text-align:right;padding-right: 16px;">200,200,434.88</td>
+            </tr>
+        </table>
+        <!--期初·持仓明细 End-->
+    </div>
+    <!--期初·现金明细-->
+    <div style="margin:40px 0 20px;font-size:20px;font-weight: 700;color:#000000;">期初·现金明细</div>
+    <div style="border-radius: 8px 8px 0 0;overflow: hidden;">
+        <table style="width:100%;border:0;border-collapse: collapse;">
+            <tr class="table-header">
+                <td style="position:relative;width:58%;padding-left:16px">
+                    现金币种
+                    <span style="position:absolute;right:0;top:10px;display:inline-block;height:21px;vertical-align: middle;"></span>
+                </td>
+                <td style="position:relative;width:14%;padding-right:16px;text-align: right;">
+                    期初余额
+                    <span
+                            style="position:absolute;right:0;top:10px;display:inline-block;height:21px;vertical-align: middle;"></span>
+                </td>
+                <td style="position:relative;width:15%;padding-right:16px;text-align: right;">
+                    已结算现金
+                    <span
+                            style="position:absolute;right:0;top:10px;display:inline-block;height:21px;vertical-align: middle;"></span>
+                </td>
+                <td style="position:relative;width:14%;padding-right:16px;text-align: right;">
+                    未结算现金
+                </td>
+            </tr>
+            <tr class="border-bottom-line text-sm text-c2 bg-white">
+                <td class="text-c1" style="padding:16px;">CHN</td>
+                <td class="text-c2" style="text-align:right;padding-right: 16px;">200,200,434.88</td>
+                <td class="text-c2" style="text-align:right;padding-right: 16px;">200,200,434.88</td>
+                <td class="text-c2" style="text-align:right;padding-right: 16px;">200,200,434.88</td>
+            </tr>
+            <tr class="table-footer">
+                <td style="padding:16px;">
+                    总计
+                    <span class="text-c3">（HKD）</span>
+                </td>
+                <td class="font-500" style="text-align:right;padding-right: 16px;">200,200,434.88</td>
+                <td class="font-500" style="text-align:right;padding-right: 16px;">200,200,434.88</td>
+                <td class="font-500" style="text-align:right;padding-right: 16px;">200,200,434.88</td>
+            </tr>
+        </table>
+        <!--期初·现金明细 End-->
+    </div>
+    <!--期初 End-->
+
+    <div class="divide-line"></div>
+
+    <!--资金进出-->
+    <div class="pl-40 color text-2xl font-bold bg-funds" style="margin:40px 0 27px;">
+        资金进出
+    </div>
+    <div style="border-radius: 8px 8px 0 0;overflow: hidden;">
+        <table style="width:100%;border:0;border-collapse: collapse;">
+            <tr class="table-header">
+                <td style="position:relative;width:58%;padding-left:16px">
+                    类型
+                    <span
+                            style="position:absolute;right:0;top:10px;display:inline-block;height:21px;vertical-align: middle;"></span>
+                </td>
+                <td style="position:relative;width:14%;padding-right:16px;text-align: right;">
+                    数额
+                    <span
+                            style="position:absolute;right:0;top:10px;display:inline-block;height:21px;vertical-align: middle;"></span>
+                </td>
+                <td style="position:relative;width:15%;padding-right:16px;text-align: right;">
+                    币种
+                    <span
+                            style="position:absolute;right:0;top:10px;display:inline-block;height:21px;vertical-align: middle;"></span>
+                </td>
+                <td style="position:relative;width:14%;padding-right:16px;text-align: right;">
+                    日期
+                </td>
+            </tr>
+            <tr class="border-bottom-line text-sm text-c2 bg-white">
+                <td style="padding:16px;">200,200,434.88</td>
+                <td style="text-align:right;padding-right: 16px;">200,200,434.88</td>
+                <td style="text-align:right;padding-right: 16px;">HKD</td>
+                <td style="text-align:right;padding-right: 16px;">200,200,434.88</td>
+            </tr>
+        </table>
+    </div>
+    <!--资金进出 End-->
+
+    <!--订单明细-->
+    <div class="pl-40 color text-2xl font-bold bg-order" style="margin:40px 0 27px;">
+        订单明细
+    </div>
+    <div style="border-radius: 8px 8px 0 0;overflow: hidden;">
+        <table style="width:100%;border:0;border-collapse: collapse;">
+            <tr class="table-header">
+                <td style="position:relative;width:21%;padding-left:16px">
+                    股票信息
+                    <span
+                            style="position:absolute;right:0;top:10px;display:inline-block;height:21px;vertical-align: middle;"></span>
+                </td>
+                <td style="position:relative;width:7%;padding-left:16px;text-align: left;">
+                    交易
+                    <span
+                            style="position:absolute;right:0;top:10px;display:inline-block;height:21px;vertical-align: middle;"></span>
+                </td>
+                <td style="position:relative;width:12%;padding-right:16px;text-align: right;">
+                    数量
+                    <span
+                            style="position:absolute;right:0;top:10px;display:inline-block;height:21px;vertical-align: middle;"></span>
+                </td>
+                <td style="position:relative;width:12%;padding-right:16px;text-align: right;">
+                    价格
+                    <span
+                            style="position:absolute;right:0;top:10px;display:inline-block;height:21px;vertical-align: middle;"></span>
+                </td>
+                <td style="position:relative;width:12%;padding-right:16px;text-align: right;">
+                    数额
+                    <span
+                            style="position:absolute;right:0;top:10px;display:inline-block;height:21px;vertical-align: middle;"></span>
+                </td>
+                <td style="position:relative;width:12%;padding-right:16px;text-align: right;">
+                    佣金
+                    <span
+                            style="position:absolute;right:0;top:10px;display:inline-block;height:21px;vertical-align: middle;"></span>
+                </td>
+                <td style="position:relative;width:12%;padding-right:16px;text-align: right;">
+                    开仓/平仓
+                    <span
+                            style="position:absolute;right:0;top:10px;display:inline-block;height:21px;vertical-align: middle;"></span>
+                </td>
+                <td style="position:relative;width:12%;padding-right:16px;text-align: right;">
+                    交易时间
+                </td>
+            </tr>
+            <tr class="border-bottom-line text-sm text-c1 bg-white">
+                <td style="padding:16px;">
+                    <div class="text-sm"><span class="text-base mr-16">TENCENT</span>AAPL</div>
+                    <div class="text-c3" style="margin-top:8px;">
+                        纽约证券交易所
+                        <span class="divide-line-sm"></span>
+                        USD
+                    </div>
+                </td>
+                <td class="text-c2" style="padding:16px;">买</td>
+                <td class="text-c2" style="text-align:right;padding-right: 16px;">200,200,434.88</td>
+                <td class="text-c2" style="text-align:right;padding-right: 16px;">200,200,434.88</td>
+                <td class="text-c2" style="text-align:right;padding-right: 16px;">200,200,434.88</td>
+                <td class="text-c2" style="text-align:right;padding-right: 16px;">200,200,434.88</td>
+                <td class="text-c2" style="text-align:right;padding-right: 16px;">开仓</td>
+                <td class="text-c2" style="text-align:right;padding-right: 16px;">200,200,434.88</td>
+            </tr>
+            <tr>
+                <td colspan="9">
+                    <div class="text-c3 overflow-hidden px-20 py-6 border-bottom-line"
+                         style="background-color:#f7f8fa;">
+                        <div class="float-left mr-12">佣金明细</div>
+                        <div class="float-right mr-12">交收日期: 2023-03-10</div>
+                        <div class="float-right mr-12">交易日期: 2023-03-10</div>
+                        <div class="float-right mr-12">平台费: 200,434.88</div>
+                        <div class="float-right mr-12">结算交收费: 200,434.88</div>
+                        <div class="float-right mr-12">印花税: 200,434.88</div>
+                        <div class="float-right mr-12">交易费: 200,434.88</div>
+                        <div class="float-right mr-12">交易佣金: 200,434.88</div>
+                    </div>
+                </td>
+            </tr>
+            <tr class="text-sm text-c1 bg-white">
+                <td style="padding:16px;">
+                    <div class="text-sm"><span class="text-base mr-16">TENCENT</span>AAPL
+                        <span class="ml-8 rounded-12 text-sm text-c4" style="padding:1px 4px;border:1px solid #cccccc;">卖空</span>
+                    </div>
+                    <div class="text-c3" style="margin-top:8px;">
+                        纽约证券交易所
+                        <span class="divide-line-sm"></span>
+                        USD
+                    </div>
+                </td>
+                <td class="text-c2" style="padding:16px;">买</td>
+                <td class="text-c2 text-right pr-16">200,200,434.88</td>
+                <td class="text-c2 text-right pr-16">200,200,434.88</td>
+                <td class="text-c2 text-right pr-16">200,200,434.88</td>
+                <td class="text-c2 text-right pr-16">200,200,434.88</td>
+                <td class="text-c2 text-right pr-16">开仓</td>
+                <td class="text-c2 text-right pr-16">200,200,434.88</td>
+            </tr>
+            <tr>
+                <td colspan="9">
+                    <div class="text-c3 overflow-hidden px-20 py-6 border-bottom-line"
+                         style="background-color:#f7f8fa;">
+                        <div class=" float-left mr-12">佣金明细</div>
+                        <div class="float-right mr-12">交收日期: 2023-03-10</div>
+                        <div class="float-right mr-12">交易日期: 2023-03-10</div>
+                        <div class="float-right mr-12">平台费: 200,434.88</div>
+                        <div class="float-right mr-12">结算交收费: 200,434.88</div>
+                        <div class="float-right mr-12">印花税: 200,434.88</div>
+                        <div class="float-right mr-12">交易费: 200,434.88</div>
+                        <div class="float-right mr-12">交易佣金: 200,434.88</div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <!--订单明细 End-->
+
+    <!--融资总览-->
+    <div class="pl-40 color text-2xl font-bold bg-stats" style="margin:40px 0 27px;">
+        融资总览
+    </div>
+    <div style="border-radius: 8px 8px 0 0;overflow: hidden;">
+        <table style="width:100%;border:0;border-collapse: collapse;">
+            <tr class="table-header">
+                <td style="position:relative;width:14%;padding-left:16px">
+                    融资日期
+                    <span style="position:absolute;right:0;top:10px;display:inline-block;height:21px;vertical-align: middle;"></span>
+                </td>
+                <td style="position:relative;width:14%;padding-left:16px">
+                    计息日期
+                    <span style="position:absolute;right:0;top:10px;display:inline-block;height:21px;vertical-align: middle;"></span>
+                </td>
+                <td style="position:relative;width:16%;padding-left:16px">
+                    币种
+                    <span style="position:absolute;right:0;top:10px;display:inline-block;height:21px;vertical-align: middle;"></span>
+                </td>
+                <td style="position:relative;width:14%;padding-right:16px;text-align: right;">
+                    融资金额
+                    <span
+                            style="position:absolute;right:0;top:10px;display:inline-block;height:21px;vertical-align: middle;"></span>
+                </td>
+                <td style="position:relative;width:14%;padding-right:16px;text-align: right;">
+                    融资年利率
+                    <span
+                            style="position:absolute;right:0;top:10px;display:inline-block;height:21px;vertical-align: middle;"></span>
+                </td>
+                <td style="position:relative;width:14%;padding-right:16px;text-align: right;">
+                    今日利息
+                    <span
+                            style="position:absolute;right:0;top:10px;display:inline-block;height:21px;vertical-align: middle;"></span>
+                </td>
+                <td style="position:relative;width:14%;padding-right:16px;text-align: right;">
+                    本月累计利息
+                </td>
+            </tr>
+            <tr class="border-bottom-line text-sm text-c2 bg-white">
+                <td style="padding:16px;">2023-03-08</td>
+                <td style="padding:16px;">2023-03-08</td>
+                <td style="padding:16px;">HKD</td>
+                <td style="text-align:right;padding-right: 16px;">200,200,434.88</td>
+                <td style="text-align:right;padding-right: 16px;">200,200,434.88</td>
+                <td style="text-align:right;padding-right: 16px;">200,200,434.88</td>
+                <td style="text-align:right;padding-right: 16px;">200,200,434.88</td>
+            </tr>
+        </table>
+    </div>
+    <!--出入金记录 End-->
+
+    <div class="divide-line"></div>
+
+    <!--期末-->
+    <div class="pl-40 color text-2xl font-bold bg-stats" style="margin:40px 0 27px;">
+        期末
+    </div>
+    <div style="padding:20px;background-color: #f0f2fb;border-radius: 2px;">
+        <div
+                style="margin-bottom:28px;font-size:20px;font-weight:700;padding-bottom:16px;border-bottom:1px solid #ddd;">
+            资产总览（HKD）
+        </div>
+        <div style="zoom:1;overflow:hidden;">
+            <div class="text-c2 float-left text-base" style="width:25%;">
+                <div style="margin-bottom:8px;">股票总价值</div>
+                <div class="text-c1">100.00</div>
+            </div>
+
+            <div class="text-c2 float-left text-base" style="width:25%;">
+                <div style="margin-bottom:8px;">现金总价值</div>
+                <div class="text-c1">100.00</div>
+            </div>
+            <div class="text-c2 float-left text-base" style="width:25%;">
+                <div style="margin-bottom:8px;">累计利息</div>
+                <div class="text-c1">100.00</div>
+            </div>
+            <div class="text-c2 float-left text-base" style="width:25%;">
+                <div style="margin-bottom:8px;">资产总价值</div>
+                <div class="text-c1">100.00</div>
+            </div>
+        </div>
+    </div>
+    <!--期末·持仓明细-->
+    <div style="margin:40px 0 20px;font-size:20px;font-weight: 700;color:#000000;">期末·持仓明细</div>
+    <div style="border-radius: 8px 8px 0 0;overflow: hidden;">
+        <table style="width:100%;border:0;border-collapse: collapse;">
+            <tr class="table-header">
+                <td style="position:relative;width:21%;padding-left:16px">
+                    股票信息
+                    <span
+                            style="position:absolute;right:0;top:10px;display:inline-block;height:21px;vertical-align: middle;"></span>
+                </td>
+                <td style="position:relative;width:9%;padding-right:16px;text-align: right;">
+                    持股数量
+                    <span
+                            style="position:absolute;right:0;top:10px;display:inline-block;height:21px;vertical-align: middle;"></span>
+                </td>
+                <td style="position:relative;width:14%;padding-right:16px;text-align: right;">
+                    收盘价
+                    <span
+                            style="position:absolute;right:0;top:10px;display:inline-block;height:21px;vertical-align: middle;"></span>
+                </td>
+                <td style="position:relative;width:14%;padding-right:16px;text-align: right;">
+                    市值
+                    <span
+                            style="position:absolute;right:0;top:10px;display:inline-block;height:21px;vertical-align: middle;"></span>
+                </td>
+                <td style="position:relative;width:14%;padding-right:16px;text-align: right;">
+                    收益
+                    <span
+                            style="position:absolute;right:0;top:10px;display:inline-block;height:21px;vertical-align: middle;"></span>
+                </td>
+                <td style="position:relative;width:14%;padding-right:16px;text-align: right;">
+                    初始保证金
+                    <span
+                            style="position:absolute;right:0;top:10px;display:inline-block;height:21px;vertical-align: middle;"></span>
+                </td>
+                <td style="position:relative;width:14%;padding-right:16px;text-align: right;">
+                    维持保证金
+                </td>
+            </tr>
+            <tr class="text-sm text-c1 bg-white border-bottom-line">
+                <td style="padding:16px;">
+                    <div class="text-sm"><span class="text-base mr-16">苹果</span>AAPL</div>
+                    <div class="text-c3" style="margin-top:8px;">
+                        纽约证券交易所
+                        <span class="divide-line-sm"></span>
+                        USD
+                    </div>
+                </td>
+                <td class="text-c2" style="text-align:right;padding-right: 16px;">200,200,434.88</td>
+                <td class="text-c2" style="text-align:right;padding-right: 16px;">200,200,434.88</td>
+                <td class="text-c2" style="text-align:right;padding-right: 16px;">200,200,434.88</td>
+                <td class="text-c2" style="text-align:right;padding-right: 16px;">200,200,434.88</td>
+                <td class="text-c2" style="text-align:right;padding-right: 16px;">200,200,434.88</td>
+                <td class="text-c2" style="text-align:right;padding-right: 16px;">200,200,434.88</td>
+            </tr>
+            <tr class="border-bottom-line text-sm text-c1 bg-white">
+                <td style="padding:16px;">
+                    <div class="text-sm"><span class="text-base mr-16">TENCENT </span>AAPL</div>
+                    <div class="text-c3" style="margin-top:8px;">
+                        纽约证券交易所
+                        <span class="divide-line-sm"></span>
+                        USD
+                    </div>
+                </td>
+                <td class="text-c2" style="text-align:right;padding-right: 16px;">200,200,434.88</td>
+                <td class="text-c2" style="text-align:right;padding-right: 16px;">200,200,434.88</td>
+                <td class="text-c2" style="text-align:right;padding-right: 16px;">200,200,434.88</td>
+                <td class="text-c2" style="text-align:right;padding-right: 16px;">200,200,434.88</td>
+                <td class="text-c2" style="text-align:right;padding-right: 16px;">200,200,434.88</td>
+                <td class="text-c2" style="text-align:right;padding-right: 16px;">200,200,434.88</td>
+            </tr>
+            <tr class="table-footer">
+                <td style="padding:16px;">
+                    总计
+                    <span class="text-c3">（HKD）</span>
+                </td>
+                <td class="font-500" style="text-align:right;padding-right: 16px;"></td>
+                <td class="font-500" style="text-align:right;padding-right: 16px;"></td>
+                <td class="font-500" style="text-align:right;padding-right: 16px;">200,200,434.88</td>
+                <td class="font-500" style="text-align:right;padding-right: 16px;">200,200,434.88</td>
+                <td class="font-500" style="text-align:right;padding-right: 16px;">200,200,434.88</td>
+                <td class="font-500" style="text-align:right;padding-right: 16px;">200,200,434.88</td>
+            </tr>
+        </table>
+        <!--期末·持仓明细 End-->
+    </div>
+    <!--期末·现金明细-->
+    <div style="margin:40px 0 20px;font-size:20px;font-weight: 700;color:#000000;">期末·现金明细</div>
+    <div style="border-radius: 8px 8px 0 0;overflow: hidden;">
+        <table style="width:100%;border:0;border-collapse: collapse;">
+            <tr class="table-header">
+                <td style="position:relative;width:58%;padding-left:16px">
+                    现金币种
+                    <span style="position:absolute;right:0;top:10px;display:inline-block;height:21px;vertical-align: middle;"></span>
+                </td>
+                <td style="position:relative;width:14%;padding-right:16px;text-align: right;">
+                    期末余额
+                    <span
+                            style="position:absolute;right:0;top:10px;display:inline-block;height:21px;vertical-align: middle;"></span>
+                </td>
+                <td style="position:relative;width:15%;padding-right:16px;text-align: right;">
+                    已结算现金
+                    <span
+                            style="position:absolute;right:0;top:10px;display:inline-block;height:21px;vertical-align: middle;"></span>
+                </td>
+                <td style="position:relative;width:14%;padding-right:16px;text-align: right;">
+                    未结算现金
+                </td>
+            </tr>
+            <tr class="border-bottom-line text-sm text-c2 bg-white">
+                <td class="text-c1" style="padding:16px;">CHN</td>
+                <td class="text-c2" style="text-align:right;padding-right: 16px;">200,200,434.88</td>
+                <td class="text-c2" style="text-align:right;padding-right: 16px;">200,200,434.88</td>
+                <td class="text-c2" style="text-align:right;padding-right: 16px;">200,200,434.88</td>
+            </tr>
+            <tr class="table-footer">
+                <td style="padding:16px;">
+                    总计
+                    <span class="text-c3">（HKD）</span>
+                </td>
+                <td class="font-500" style="text-align:right;padding-right: 16px;">200,200,434.88</td>
+                <td class="font-500" style="text-align:right;padding-right: 16px;">200,200,434.88</td>
+                <td class="font-500" style="text-align:right;padding-right: 16px;">200,200,434.88</td>
+            </tr>
+        </table>
+
+        <!--期末·现金明细 End-->
+    </div>
+    <!--期末 End-->
+
+    <div class="divide-line"></div>
+
+    <!--参考汇率-->
+    <div class="pl-40 color text-2xl font-bold bg-funds" style="margin:40px 0 27px;">
+        参考汇率
+    </div>
+    <div style="border-radius: 8px 8px 0 0;overflow: hidden;">
+        <table style="width:100%;border:0;border-collapse: collapse;">
+            <tr class="table-header">
+                <td style="position:relative;width:58%;padding-left:16px">
+                    日期
+                    <span
+                            style="position:absolute;right:0;top:10px;display:inline-block;height:21px;vertical-align: middle;"></span>
+                </td>
+                <td style="position:relative;width:15%;padding-right:16px;text-align: right;">
+                    港币美元汇率
+                    <span
+                            style="position:absolute;right:0;top:10px;display:inline-block;height:21px;vertical-align: middle;"></span>
+                </td>
+                <td style="position:relative;width:14%;padding-right:16px;text-align: right;">
+                    港币人民币汇率
+                </td>
+            </tr>
+            <tr class="border-bottom-line text-sm text-c2 bg-white">
+                <td style="padding:16px;">2023-03-08</td>
+                <td style="text-align:right;padding-right: 16px;">1 港元 = 0.1275 美元</td>
+                <td style="text-align:right;padding-right: 16px;">1 港元 = 0.8758 人民币</td>
+            </tr>
+        </table>
+    </div>
+    <!--参考汇率 End-->
+
+    <!--  重要备注  -->
+    <div class="pl-40 color text-2xl font-bold bg-mark" style="margin:40px 0 27px;">
+        重要备注
+    </div>
+    <div class="mark text-c3">
+        <div class="number">1、</div>
+        <div class="mark-text">
+            除非另有说明，以上交易由本公司以代理人名义成交。
+        </div>
+    </div>
+    <div class="mark text-c3">
+        <div class="number">2、</div>
+        <div class="mark-text">
+            本结单亦作为存入交易之收据。
+        </div>
+    </div>
+    <div class="mark text-c3">
+        <div class="number">3、</div>
+        <div class="mark-text">
+            阁下有责任检查本结单上所列的每项交易纪录并须立即书面通知本公司任何阁下认为错误、不妥当及/或未授权的纪录。除非本公司在结单日期起7天内收到该通知，否则本结单上交易纪录对阁下均具有终局性约束力。而阁下并不可以任何理由对本结单上的任何交易纪录提出争辩。
+        </div>
+    </div>
+    <div class="mark text-c3">
+        <div class="number">4、</div>
+        <div class="mark-text">
+            请保存本结单以供参考。阁下地址或个人资料如有变更请立即以书面通知本公司。
+        </div>
+    </div>
+    <div class="mark text-c3">
+        <div class="number">5、</div>
+        <div class="mark-text">
+            美国及香港市场之资金不能立即互换。美国市场的资金由其中一个市场交易平台转移至另一市场交易平台可能需要交易日加二个工作天（T+2）之时间。
+        </div>
+    </div>
+    <div class="mark text-c3">
+        <div class="number">6、</div>
+        <div class="mark-text">
+            美国交易结算日为交易日再加二天，即T+2。
+        </div>
+    </div>
+    <div class="mark text-c3">
+        <div class="number">7、</div>
+        <div class="mark-text">
+            在香港以外地方收取或持有的资产，将可能会受到有关海外司法辖区的法律及规例监管。该法规与香港有关的法例有所不同，因此有关资产将可能不会享有在香港收取或持有资产的相同保障。
+        </div>
+    </div>
+    <div class="mark text-c3">
+        <div class="number">8、</div>
+        <div class="mark-text">
+            阁下的资产存放中介为XXXX结算所。
+        </div>
+    </div>
+    <div class="mark text-c3">
+        <div class="number">9、</div>
+        <div class="mark-text">
+            以上时间均为北京时间UTC+8。
+        </div>
+    </div>
+    <div class="mark text-c3">
+        <div class="number">10、</div>
+        <div class="mark-text">
+            本公司证实已将付印花税予有关交易所。如交易金额为外币，印花税将按交易金额以《印花税条例》（第117章）订明的汇率折算为港币的金额计算。
+        </div>
+    </div>
+    <!--  重要备注 end -->
+    <!-- footer -->
+    <div style="height: 52px"></div>
+    <div class="name color">亿邦证券(国际)</div>
+    <div class="en-name color" style="letter-spacing: 4px">EBANG SECURITIES</div>
+    <div style="height: 21px"></div>
+    <div class="text-base text-c3 mb-8">亿邦证券国际（香港）有限公司</div>
+    <div class="text-base text-c3 mb-8">证券及期货事务监察委员会注册持牌法团（编号BRZ843）</div>
+    <div class="mb-8 text-base overflow-hidden">
+        <div class="text-base text-c3 float-left">电话</div>
+        <div class="text-base text-c1 float-left ml-8">18766262999</div>
+    </div>
+    <div class="mb-8 text-base overflow-hidden">
+        <div class="text-base text-c3 float-left">地址</div>
+        <div class="text-base text-c1 float-left ml-8">香港上环德辅道西9号金刚商业中心9楼9C室</div>
+    </div>
+    <div style="padding: 31px 0"></div>
+    <!-- footer end -->
+
+    <!--  pagination   -->
+    <div class="py-8 px-20" style="border-top: 1px solid #E9EBF0;height: 36px;">
+        <div class="float-left text-c3">客户姓名</div>
+        <div class="float-left ml-8">测试用户</div>
+        <div class="float-left" style="width: 80px; height: 1px;"></div>
+        <div class="float-left text-c3">Account</div>
+        <div class="float-left ml-8">18766262999</div>
+        <div class="float-right">1/2</div>
+    </div>
+    <div style="height: 16px;width: 1px;"></div>
+</div>
+</body>
+
+</html>
