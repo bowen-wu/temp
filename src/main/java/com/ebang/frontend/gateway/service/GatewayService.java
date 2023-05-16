@@ -7,14 +7,17 @@ import javax.inject.Inject;
 @Service
 public class GatewayService {
     private final ParseUrlService parseUrlService;
+    private final String baseUrl = "https://global-static.ebonex.io/front/stock-otc-test";
+    private final String indexUrl = baseUrl + "/index_a6144aba-d0ba-4412-94b0-6379994381f9.html";
 
     @Inject
     public GatewayService(ParseUrlService parseUrlService) {
         this.parseUrlService = parseUrlService;
     }
 
-    public String gateway() {
-        String cmsUrl = "https://global-static.ebonex.io/front/stock-otc-test/stock-template-day-zh_fa905dbf-8b84-4fb5-9a19-bed95f114670.html";
+    public String gateway(String path) {
+        String cmsUrl = "/".equals(path) ? indexUrl : (baseUrl + path);
         return parseUrlService.parseUrl(cmsUrl);
+
     }
 }

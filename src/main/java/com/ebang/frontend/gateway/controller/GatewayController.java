@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("")
@@ -21,7 +22,8 @@ public class GatewayController {
     @GetMapping("/*")
     @ResponseBody
     // 当接收到请求后，将 index.html 返回即可
-    public String gateway() {
-        return gatewayService.gateway();
+    public String gateway(HttpServletRequest request) {
+        String path = request.getServletPath();
+        return gatewayService.gateway(path);
     }
 }
