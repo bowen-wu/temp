@@ -1,29 +1,52 @@
 package com.ebang.frontend.gateway.service;
 
+import com.ebang.frontend.gateway.entity.CMSRes;
+import com.ebang.frontend.gateway.entity.Chunk;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.hc.client5.http.classic.methods.HttpGet;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
+import org.apache.hc.client5.http.impl.classic.HttpClients;
+import org.apache.hc.core5.http.ParseException;
+import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.inject.Inject;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 @Service
 public class GatewayService {
     private final ParseUrlService parseUrlService;
-    private final String baseUrl = "https://global-static.ebonex.io/front/stock-otc-test";
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Inject
     public GatewayService(ParseUrlService parseUrlService) {
         this.parseUrlService = parseUrlService;
     }
 
-    public ModelAndView gateway(String path) {
-        String indexUrl = "/".equals(path) ? "https://global-static.ebonex.io/front/stock-otc-test/index_c081fa0b-4229-4684-be01-ef85b91c9d31.html" : "https://global-static.ebonex.io/front/stock-otc-test/index_bfcac096-1dca-4f5e-ac81-954d3881d4cc.ftlh";
+    public String getTemplateUrlFromCMS() {
+        try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
+            HttpGet httpGet = new HttpGet("http://localhost:3000/api/chunk/24");
+            try (CloseableHttpResponse response = httpclient.execute(httpGet)) {
+                CMSRes<Chunk> chunkCMSRes = objectMapper.readValue(EntityUtils.toString(response.getEntity()), new TypeReference<CMSRes<Chunk>>() {
+                });
+                return chunkCMSRes.getData().getFilePath();
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
+    public ModelAndView gateway() {
+        String templateUrl = getTemplateUrlFromCMS();
         Map<String, Object> variableObj = new HashMap<>();
-        variableObj.put("cssPath", "https://global-static.ebonex.io/front/stock-otc-test/index_8f873daa-433d-4013-9b72-f72a5c39a55f.css");
-        variableObj.put("jsPath", "https://global-static.ebonex.io/front/stock-otc-test/index_93b8292d-5a27-404d-9d35-2ddd05637d63.js");
-
-        return parseUrlService.parseUrl(indexUrl, variableObj);
+        return parseUrlService.parseUrl(templateUrl, variableObj);
     }
 }

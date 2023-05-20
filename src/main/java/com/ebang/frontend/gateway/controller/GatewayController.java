@@ -25,6 +25,6 @@ public class GatewayController {
     // 当接收到请求后，将 index.html 返回即可
     public ModelAndView gateway(HttpServletRequest request) {
         String path = request.getServletPath();
-        return gatewayService.gateway(path);
+        return gatewayService.gateway();
     }
 }
