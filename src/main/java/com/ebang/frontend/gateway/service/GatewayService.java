@@ -10,6 +10,8 @@ import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.apache.hc.core5.http.ParseException;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
@@ -21,6 +23,7 @@ import java.util.Map;
 
 @Service
 public class GatewayService {
+    private final Logger logger = LoggerFactory.getLogger(GatewayService.class);
     private final ParseUrlService parseUrlService;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -36,6 +39,7 @@ public class GatewayService {
 
     public String getTemplateUrlFromCMS() {
         try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
+            logger.info("The request CMS url is: " + cmsUrl + cmsChunkApi);
             HttpGet httpGet = new HttpGet(cmsUrl + cmsChunkApi);
             try (CloseableHttpResponse response = httpclient.execute(httpGet)) {
                 CMSRes<Chunk> chunkCMSRes = objectMapper.readValue(EntityUtils.toString(response.getEntity()), new TypeReference<CMSRes<Chunk>>() {
@@ -51,7 +55,9 @@ public class GatewayService {
     }
 
     public ModelAndView gateway() {
+        logger.info("Start accessing the service!");
         String templateUrl = getTemplateUrlFromCMS();
+        logger.info("The templateUrl is: " + templateUrl);
         Map<String, Object> variableObj = new HashMap<>();
         return parseUrlService.parseUrl(templateUrl, variableObj);
     }

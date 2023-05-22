@@ -5,6 +5,8 @@ import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.apache.hc.core5.http.HttpEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -23,12 +25,14 @@ import java.util.Map;
 
 @Service
 public class ParseUrlService {
+    private final Logger logger = LoggerFactory.getLogger(ParseUrlService.class);
     private final String TEMPLATE_FILE_PATH = "src/main/resources/templates/index.ftlh";
 
     public ModelAndView parseUrl(String cmsUrl, Map<String, Object> variableObj) {
         try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
             HttpGet httpGet = new HttpGet(cmsUrl);
             try (CloseableHttpResponse response = httpclient.execute(httpGet)) {
+                logger.info("Get template file content!");
                 HttpEntity entity = response.getEntity();
                 InputStream inputStream = entity.getContent();
 
@@ -43,6 +47,7 @@ public class ParseUrlService {
                 }
                 bufferedReader.close();
                 write(list);
+                logger.info("Finished writing the template file(index.ftlh)!");
                 return new ModelAndView("index", variableObj);
             }
         } catch (IOException e) {

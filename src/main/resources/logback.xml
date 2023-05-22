@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+    <!-- LOG_HOME 对应的值 => key - value -->
+    <property name="LOG_HOME" value="./logs"/>
+    <property name="PROJECT_NAME" value="gateway"/>
+
+    <!-- STDOUT 是 ConsoleAppender -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <!-- WARN 及以上等级的日志都会被打印 -->
+            <level>WARN</level>
+        </filter>
+        <encoder>
+            <!-- 打印的日志的格式 -->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!-- 滚动的文件，如果文件满足了一定的条件，会被自动地切成一个文件，之后重新开一个文件 -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- deny all events with a level below INFO, that is TRACE and DEBUG -->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+
+        <!-- 滚动策略 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- 文件名称 -->
+            <fileNamePattern>${LOG_HOME}/${PROJECT_NAME}_%d{yyyy-MM-DD}.%i.log</fileNamePattern>
+            <!-- 最大时长：30天 -->
+            <MaxHistory>30</MaxHistory>
+            <!-- 最大容量：each file should be at most 10MB -->
+            <MaxFileSize>10MB</MaxFileSize>
+        </rollingPolicy>
+        <encoder>
+            <!-- 打印的日志的格式 -->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!-- 根 logger -->
+    <root level="debug">
+        <!-- 当调用日志的时候，所有的数据会被发送给 appender，appender 会发送给 STDOUT ref(reference) -->
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="FILE"/>
+    </root>
+</configuration>
