@@ -1,6 +1,6 @@
-package com.ebang.frontend.gateway.controller;
+package com.ebang.frontend.salt.controller;
 
-import com.ebang.frontend.gateway.service.GatewayService;
+import com.ebang.frontend.salt.service.ProxyService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -11,17 +11,17 @@ import javax.inject.Inject;
 
 @RestController
 @RequestMapping("")
-public class GatewayController {
-    private final GatewayService gatewayService;
+public class SaltController {
+    private final ProxyService proxyService;
 
     @Inject
-    public GatewayController(GatewayService gatewayService) {
-        this.gatewayService = gatewayService;
+    public SaltController(ProxyService proxyService) {
+        this.proxyService = proxyService;
     }
 
     @GetMapping("/*")
     @ResponseBody
-    public ModelAndView gateway() {
-        return gatewayService.gateway();
+    public ModelAndView proxy() {
+        return proxyService.proxy();
     }
 }

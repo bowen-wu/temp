@@ -1,7 +1,7 @@
-package com.ebang.frontend.gateway.service;
+package com.ebang.frontend.salt.service;
 
-import com.ebang.frontend.gateway.entity.CMSRes;
-import com.ebang.frontend.gateway.entity.Chunk;
+import com.ebang.frontend.salt.entity.CMSRes;
+import com.ebang.frontend.salt.entity.Chunk;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
@@ -22,8 +22,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class GatewayService {
-    private final Logger logger = LoggerFactory.getLogger(GatewayService.class);
+public class ProxyService {
+    private final Logger logger = LoggerFactory.getLogger(ProxyService.class);
     private final ParseUrlService parseUrlService;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -33,7 +33,7 @@ public class GatewayService {
     private String cmsChunkApi;
 
     @Inject
-    public GatewayService(ParseUrlService parseUrlService) {
+    public ProxyService(ParseUrlService parseUrlService) {
         this.parseUrlService = parseUrlService;
     }
 
@@ -54,7 +54,7 @@ public class GatewayService {
         }
     }
 
-    public ModelAndView gateway() {
+    public ModelAndView proxy() {
         logger.info("Start accessing the service!");
         String templateUrl = getTemplateUrlFromCMS();
         logger.info("The templateUrl is: " + templateUrl);

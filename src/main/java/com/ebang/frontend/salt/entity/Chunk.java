@@ -1,4 +1,4 @@
-package com.ebang.frontend.gateway.entity;
+package com.ebang.frontend.salt.entity;
 
 import java.io.Serializable;
 import java.util.Date;

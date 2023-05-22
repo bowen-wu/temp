@@ -2,7 +2,7 @@
 <configuration>
     <!-- LOG_HOME 对应的值 => key - value -->
     <property name="LOG_HOME" value="./logs"/>
-    <property name="PROJECT_NAME" value="gateway"/>
+    <property name="PROJECT_NAME" value="salt"/>
 
     <!-- STDOUT 是 ConsoleAppender -->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
