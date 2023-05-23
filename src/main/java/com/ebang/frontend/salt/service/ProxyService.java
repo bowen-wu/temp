@@ -31,6 +31,8 @@ public class ProxyService {
     private String cmsUrl;
     @Value("${cms.chunkApi}")
     private String cmsChunkApi;
+    @Value("${cms.templateUrl}")
+    private String cmsTemplateUrl;
 
     @Inject
     public ProxyService(ParseUrlService parseUrlService) {
@@ -38,6 +40,10 @@ public class ProxyService {
     }
 
     public String getTemplateUrlFromCMS() {
+        if (cmsTemplateUrl != null) {
+            logger.info("Read template url of config!");
+            return cmsTemplateUrl;
+        }
         try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
             logger.info("The request CMS url is: " + cmsUrl + cmsChunkApi);
             HttpGet httpGet = new HttpGet(cmsUrl + cmsChunkApi);

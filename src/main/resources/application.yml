@@ -1,4 +1,5 @@
 cms:
   url: http://localhost:3000
   chunkApi: /api/chunk/24
+  templateUrl: https://static-test.eaeb.co/multi/cms/file/d4631c3e-8cba-4c68-b439-99ed1d190e7c_.cms
 
